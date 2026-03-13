@@ -1,0 +1,15 @@
+node_modules/
+oneapi/
+coverage/
+
+.dist
+
+test/fixtures/**/run/
+test/fixtures/**/logs/
+test/fixtures/**/uiweb/
+test/fixtures/**/typings/
+logs/
+run/
+.node/
+
+src/generator/oneapi/*/.cache

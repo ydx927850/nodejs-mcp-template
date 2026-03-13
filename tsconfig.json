@@ -1,0 +1,20 @@
+{
+  "extends": "@alipay/tegg-tsconfig",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "chair/tegg": [
+        "./node_modules/@alipay/tegg"
+      ],
+      "chair/tegg/*": [
+        "./node_modules/@alipay/tegg/*"
+      ],
+      "@/oneapi/*": [
+        "src/generator/oneapi/*"
+      ],
+      "@/src/*": [
+        "src/*"
+      ]
+    }
+  }
+}
