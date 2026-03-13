@@ -1,0 +1,21 @@
+{
+  "entry": [
+    {
+      "import": "./app/index.ts",
+      "library": {}
+    }
+  ],
+  "target": "node 20",
+  "output": {
+    "path": "dist/server",
+    "clean": true
+  },
+  "optimization": {
+    "minify": false,
+    "moduleIds": "named"
+  },
+  "externals": {
+    "@alipay/tegg": "commonjs @alipay/tegg"
+  },
+  "stats": true
+}

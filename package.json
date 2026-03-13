@@ -1,53 +1,44 @@
 {
-  "name": "@alipay/module-quick-start",
-  "eggModule": {
-    "name": "quickstart"
-  },
-  "files": [
-    "src",
-    "*.yml",
-    "*.json"
-  ],
-  "version": "1.0.0",
-  "private": true,
-  "description": "Chair Module Quick Start",
-  "scripts": {
-    "lint": "eslint src test --cache --ext .ts",
-    "lint:fix": "npm run lint -- --fix",
-    "dev": "chair-bin dev",
-    "test": "npm run lint:fix && npm run test:local",
-    "test:local": "chair-bin test",
-    "oneapi": "chair-bin oneapi client",
-    "oneapi:server": "chair-bin module oneapi server --faas && chair-bin module jars --oneapi --faas --only-meta",
-    "cov": "chair-bin cov",
-    "tsc": "tsc",
-    "tsc:clean": "tsc -b --clean",
-    "tsc:check": "tsc --noEmit",
-    "ci": "npm run lint && npm run cov && npm run tsc:check && npm run oneapi:server"
-  },
-  "egg": {
-    "typescript": true
-  },
-  "engines": {
-    "install-node": "20"
-  },
+  "name": "chairmosn",
+  "description": "",
+  "repository": "git@code.alipay.com:chair/examples.git",
   "dependencies": {
-    "@alipay/tegg-tsconfig": "2",
-    "typescript": "~5.2.2"
+    "@eggjs/tsconfig": "^1.0.0",
+    "chair": "release-2",
+    "enums": "^1.0.0",
+    "typescript": "^4.9.5"
   },
   "devDependencies": {
     "@ali/ci": "4",
-    "@alipay/chair-bin": "7",
-    "@alipay/tegg": "^2.11.3",
-    "@alipay/tegg-service-worker": "^2.11.3",
+    "@alipay/chair-bin": "6",
     "@types/mocha": "10",
-    "@types/node": "20",
+    "@utoo/pack": "1.3.0-alpha.0",
+    "@utoo/pack-cli": "1.3.0-alpha.0",
     "eslint": "8",
-    "eslint-config-egg": "13"
+    "eslint-config-egg": "12"
   },
-  "repository": {
-    "type": "git",
-    "url": "git@code.alipay.com:chair/examples.git",
-    "directory": "module-quick-start"
-  }
+  "scripts": {
+    "build": "npx up build",
+    "dev": "chair-bin dev",
+    "debug": "chair-bin debug",
+    "module": "chair-bin module type",
+    "lint": "eslint . --ext .ts",
+    "test": "npm run lint && npm run test-local",
+    "test-local": "chair-bin test",
+    "cov": "chair-bin cov",
+    "ci": "npm run lint && npm run cov"
+  },
+  "config": {
+    "jar2proxy": false,
+    "buildAssets": false,
+    "deployAssets": false
+  },
+  "egg": {
+    "typescript": true,
+    "declarations": true
+  },
+  "engines": {
+    "install-node": "22"
+  },
+  "private": true
 }

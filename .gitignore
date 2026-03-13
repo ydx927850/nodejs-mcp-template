@@ -1,6 +1,7 @@
 node_modules/
 coverage/
 .idea/
+dist
 
 .dist
 java-home/
@@ -25,3 +26,5 @@ f.yml
 typings/sff.d.ts
 typings/chair.d.ts
 .eslintcache
+.node
+.egg
