@@ -8,6 +8,7 @@
   "target": "node 20",
   "output": {
     "path": "dist/server",
+    "filename": "[name].[contenthash:8].js",
     "clean": true
   },
   "optimization": {

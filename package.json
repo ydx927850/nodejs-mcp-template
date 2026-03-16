@@ -18,8 +18,8 @@
     "eslint-config-egg": "12"
   },
   "scripts": {
-    "build": "npx up build",
-    "dev": "chair-bin dev",
+    "build": "NODE_ENV=production tnpx up build && node scripts/pre-deploy.js",
+    "dev": "NODE_ENV=development tnpx up dev && node scripts/pre-deploy.js",
     "debug": "chair-bin debug",
     "module": "chair-bin module type",
     "lint": "eslint . --ext .ts",

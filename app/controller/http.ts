@@ -1,4 +1,4 @@
-import { HTTPController, HTTPMethod, HTTPMethodEnum, HTTPQuery } from "chair/tegg";
+import { HTTPController, HTTPMethod, HTTPMethodEnum, HTTPQuery } from "@alipay/tegg";
 
 @HTTPController({ path: "/hello" })
 class HttpHelloController {
