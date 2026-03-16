@@ -27,11 +27,28 @@ try {
   prependEntryHeader(entryPath);
 
   const manifest = {
-    entry: path.join('dist/server', entryAsset.name)
+    entry: entryAsset.name
   };
 
   fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));
-  console.log('manifest.json generated and entry file updated successfully');
+
+  // Generate dist/client/index.html
+  const clientDir = path.join(__dirname, '../dist/client');
+  fs.mkdirSync(clientDir, { recursive: true });
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello World</title>
+</head>
+<body>
+  <h1>Hello World</h1>
+</body>
+</html>`;
+  fs.writeFileSync(path.join(clientDir, 'index.html'), html);
+
+  console.log('manifest.json generated, entry file updated, and client index.html created successfully');
 } catch (err) {
   console.error('Error in pre-deploy script:', err.message);
   process.exit(1);
