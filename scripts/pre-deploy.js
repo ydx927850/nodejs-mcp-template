@@ -1,9 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 
-const deployId = process.env.DEPLOY_ID;
+const deployId = process.env.PLATFORM_ID;
 if (!deployId) {
-  console.error('DEPLOY_ID environment variable is required. Usage: DEPLOY_ID=<id> tnpm run deploy');
+  console.error('PLATFORM_ID environment variable is required. Usage: PLATFORM_ID=<id> tnpm run deploy');
   process.exit(1);
 }
 

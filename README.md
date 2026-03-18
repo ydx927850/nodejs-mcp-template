@@ -23,10 +23,10 @@ $ tnpm run build
 
 ## 部署
 
-部署前需要设置 `DEPLOY_ID` 环境变量：
+部署前需要设置 `PLATFORM_ID` 环境变量：
 
 ```bash
-$ DEPLOY_ID=<id> tnpm run deploy
+$ PLATFORM_ID=<id> tnpm run deploy
 ```
 
 部署脚本会自动执行以下操作：
