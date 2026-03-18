@@ -1,6 +1,6 @@
-# Chair-OneAPI
+# Chair-Fass
 
-Chair OneAPI HTTP 服务调用举例
+Chair Fass HTTP 服务调用举例
 
 
 ## 初始化
@@ -15,32 +15,25 @@ $ tnpm install
 $ tnpm run dev
 ```
 
-浏览器打开: http://localhost:7001
+## 构建
 
 ```bash
-$ open http://localhost:7001
+$ tnpm run build
 ```
 
-## 运行单元测试
+## 部署
+
+部署前需要设置 `DEPLOY_ID` 环境变量：
 
 ```bash
-$ tnpm run test
+$ DEPLOY_ID=<id> tnpm run deploy
 ```
 
-## 生成 OneAPI 协议
+部署脚本会自动执行以下操作：
 
-```bash
-$ tnpm run oneapi
-```
+1. 生成 `dist/manifest.json`（服务端构建元信息）
+2. 生成 `dist/unio.config.json`（包含 `platformId`）
+3. 生成 `dist/client/index.html`
+4. 将服务端入口文件注入 `NODE_PATH` 配置
+5. 通过 `apc publish` 发布到开发环境
 
-## 生成 OneAPI 协议并上传(本地模式)
-
-```bash
-$ tnpm run oneapi:upload
-```
-
-## OneAPI 平台查看
-
-https://oneapi.alipay.com/app/chairmosn/tag?source=ZAPPINFO
-
-找到应用 chairmosn，进入应用详情后，找到 `local_${域账号}` 的分支，可以查看发布的 OneAPI 协议
