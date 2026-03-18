@@ -12,19 +12,5 @@
     "build": "NODE_ENV=production tnpx up build",
     "dev": "NODE_ENV=development tnpx up dev",
     "deploy": "node scripts/pre-deploy.js && apc publish --fullstack --endpoint https://uniocontrol-pre.antgroup-inc.cn/api/v1/unioApi/ai-pages/deployToDev"
-  },
-  "config": {
-    "jar2proxy": false,
-    "buildAssets": false,
-    "deployAssets": false
-  },
-  "egg": {
-    "typescript": true,
-    "declarations": true
-  },
-  "engines": {
-    "install-node": "22"
-  },
-  "private": true
+  }
 }
-
