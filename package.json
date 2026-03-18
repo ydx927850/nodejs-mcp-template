@@ -12,8 +12,8 @@
     "@ali/ci": "4",
     "@alipay/chair-bin": "6",
     "@types/mocha": "10",
-    "@utoo/pack": "1.3.0-alpha.0",
-    "@utoo/pack-cli": "1.3.0-alpha.0",
+    "@utoo/pack": "1.3.1",
+    "@utoo/pack-cli": "1.3.1",
     "eslint": "8",
     "eslint-config-egg": "12",
     "@alipay/apc": "^1"
@@ -21,14 +21,7 @@
   "scripts": {
     "build": "NODE_ENV=production tnpx up build",
     "dev": "NODE_ENV=development tnpx up dev",
-    "deploy": "node scripts/pre-deploy.js && apc publish --fullstack --endpoint https://uniocontrol-pre.antgroup-inc.cn/api/v1/unioApi/ai-pages/deployToDev",
-    "debug": "chair-bin debug",
-    "module": "chair-bin module type",
-    "lint": "eslint . --ext .ts",
-    "test": "npm run lint && npm run test-local",
-    "test-local": "chair-bin test",
-    "cov": "chair-bin cov",
-    "ci": "npm run lint && npm run cov"
+    "deploy": "node scripts/pre-deploy.js && apc publish --fullstack --endpoint https://uniocontrol-pre.antgroup-inc.cn/api/v1/unioApi/ai-pages/deployToDev"
   },
   "config": {
     "jar2proxy": false,
