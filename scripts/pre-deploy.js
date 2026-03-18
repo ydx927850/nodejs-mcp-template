@@ -8,7 +8,7 @@ if (!deployId) {
 }
 
 const statsPath = path.join(__dirname, '../dist/server/stats.json');
-const manifestPath = path.join(__dirname, '../dist/manifest.json');
+const manifestPath = path.join(__dirname, '../dist/server/manifest.json');
 
 function prependEntryHeader(entryPath) {
   const content = fs.readFileSync(entryPath, 'utf-8');
@@ -20,10 +20,10 @@ require('module').Module._initPaths();
 
 try {
   const stats = JSON.parse(fs.readFileSync(statsPath, 'utf-8'));
-  
+
   // Find the entry file from assets. 
   const entryAsset = stats.assets.find(asset => asset.name.endsWith('.js') && !asset.name.endsWith('.map'));
-  
+
   if (!entryAsset) {
     console.error('Could not find entry asset in stats.json');
     process.exit(1);
@@ -33,10 +33,7 @@ try {
   prependEntryHeader(entryPath);
 
   const manifest = {
-    version: 1,
-    server: {
-      entry: `./server/${entryAsset.name}`,
-    }
+    entry: entryAsset.name,
   };
 
   fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));
