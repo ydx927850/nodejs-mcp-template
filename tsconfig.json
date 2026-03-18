@@ -1,5 +1,4 @@
 {
-  "extends": "@eggjs/tsconfig",
   "compilerOptions": {
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true

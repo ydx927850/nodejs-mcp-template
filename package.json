@@ -2,21 +2,11 @@
   "name": "chairmosn",
   "description": "",
   "repository": "git@code.alipay.com:chair/examples.git",
-  "dependencies": {
-    "@eggjs/tsconfig": "^1.0.0",
-    "chair": "release-2",
-    "enums": "^1.0.0",
-    "typescript": "^4.9.5"
-  },
   "devDependencies": {
-    "@ali/ci": "4",
-    "@alipay/chair-bin": "6",
-    "@types/mocha": "10",
     "@utoo/pack": "1.3.1",
     "@utoo/pack-cli": "1.3.1",
-    "eslint": "8",
-    "eslint-config-egg": "12",
-    "@alipay/apc": "^1"
+    "@alipay/apc": "^1",
+    "typescript": "^4.9.5"
   },
   "scripts": {
     "build": "NODE_ENV=production tnpx up build",
@@ -37,3 +27,4 @@
   },
   "private": true
 }
+
