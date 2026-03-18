@@ -1,8 +1,14 @@
 const fs = require('fs');
 const path = require('path');
 
+const deployId = process.env.DEPLOY_ID;
+if (!deployId) {
+  console.error('DEPLOY_ID environment variable is required. Usage: DEPLOY_ID=<id> tnpm run deploy');
+  process.exit(1);
+}
+
 const statsPath = path.join(__dirname, '../dist/server/stats.json');
-const manifestPath = path.join(__dirname, '../dist/server/manifest.json');
+const manifestPath = path.join(__dirname, '../dist/manifest.json');
 
 function prependEntryHeader(entryPath) {
   const content = fs.readFileSync(entryPath, 'utf-8');
@@ -27,7 +33,10 @@ try {
   prependEntryHeader(entryPath);
 
   const manifest = {
-    entry: entryAsset.name
+    version: 1,
+    server: {
+      entry: entryAsset.name,
+    }
   };
 
   fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));
@@ -48,7 +57,13 @@ try {
 </html>`;
   fs.writeFileSync(path.join(clientDir, 'index.html'), html);
 
-  console.log('manifest.json generated, entry file updated, and client index.html created successfully');
+  // Generate unio.config.json
+  const unioConfig = {
+    platformId: deployId
+  };
+  fs.writeFileSync(path.join(__dirname, '../dist/unio.config.json'), JSON.stringify(unioConfig, null, 2));
+
+  console.log('manifest.json generated, entry file updated, unio.config.json created, and client index.html created successfully');
 } catch (err) {
   console.error('Error in pre-deploy script:', err.message);
   process.exit(1);

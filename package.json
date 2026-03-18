@@ -19,9 +19,9 @@
     "@alipay/apc": "^1"
   },
   "scripts": {
-    "build": "NODE_ENV=production tnpx up build && node scripts/pre-deploy.js",
-    "dev": "NODE_ENV=development tnpx up dev && node scripts/pre-deploy.js",
-    "deploy": "apc publish --fullstack --endpoint https://uniocontrol-pre.antgroup-inc.cn/api/v1/unioApi/ai-pages/deployToDev",
+    "build": "NODE_ENV=production tnpx up build",
+    "dev": "NODE_ENV=development tnpx up dev",
+    "deploy": "node scripts/pre-deploy.js && apc publish --fullstack --endpoint https://uniocontrol-pre.antgroup-inc.cn/api/v1/unioApi/ai-pages/deployToDev",
     "debug": "chair-bin debug",
     "module": "chair-bin module type",
     "lint": "eslint . --ext .ts",
