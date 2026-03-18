@@ -35,7 +35,7 @@ try {
   const manifest = {
     version: 1,
     server: {
-      entry: entryAsset.name,
+      entry: `./server/${entryAsset.name}`,
     }
   };
 
