@@ -23,10 +23,21 @@ $ tnpm run build
 
 ## 部署
 
-部署前需要设置 `PLATFORM_ID` 环境变量：
+部署前需要设置 ak/sk/webgw_app_id 配置：
 
+`vi ~/.apc/config.json`
+
+```json
+{
+  "ak": "xxx",
+  "sk": "xxx",
+  "webgw_app_id": "180020010001286502" // 灵光固定用这个
+}
+```
+
+传入 `PLATFORM_ID` 和 `env` 部署指定应用和环境：
 ```bash
-$ PLATFORM_ID=<id> tnpm run deploy
+$ PLATFORM_ID=<id> tnpm run deploy -- --env <dev|pre|prod>
 ```
 
 部署脚本会自动执行以下操作：
