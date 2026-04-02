@@ -35,7 +35,9 @@ $ tnpm run build
 }
 ```
 
+
 传入 `PLATFORM_ID` 和 `env` 部署指定应用和环境：
+
 ```bash
 $ PLATFORM_ID=<id> tnpm run deploy -- --env <dev|pre|prod>
 ```
