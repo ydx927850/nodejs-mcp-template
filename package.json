@@ -11,6 +11,6 @@
   "scripts": {
     "build": "NODE_ENV=production tnpx up build",
     "dev": "NODE_ENV=development tnpx up dev",
-    "deploy": "node scripts/pre-deploy.js && apc publish --env prod --endpoint https://webgw.antgroup-inc.cn/yuyanaiopen/app/publish --access-key xxx --secret-key xxx --webgw-app-id 180020010001286502"
+    "deploy": "node scripts/pre-deploy.js && apc publish --env prod --endpoint https://webgw.antgroup-inc.cn/yuyanaiopen/app/publish --ak xxx --sk xxx --webgw-app-id 180020010001286502"
   }
 }
