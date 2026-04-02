@@ -21,7 +21,7 @@ require('module').Module._initPaths();
 try {
   const stats = JSON.parse(fs.readFileSync(statsPath, 'utf-8'));
 
-  // Find the entry file from assets. 
+  // Find the entry file from assets.
   const entryAsset = stats.assets.find(asset => asset.name.endsWith('.js') && !asset.name.endsWith('.map'));
 
   if (!entryAsset) {
@@ -38,25 +38,15 @@ try {
 
   fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));
 
-  // Generate dist/client/index.html
-  const clientDir = path.join(__dirname, '../dist/client');
-  fs.mkdirSync(clientDir, { recursive: true });
-  const html = `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hello World</title>
-</head>
-<body>
-  <h1>Hello World</h1>
-</body>
-</html>`;
-  fs.writeFileSync(path.join(clientDir, 'index.html'), html);
-
   // Generate unio.config.json
   const unioConfig = {
-    platformId: deployId
+    schemaVersion: "1.0.0",
+    // 灵光固定脚手架
+    scaffoldCode: "363",
+    // 灵光固定平台码
+    platformCode: "318",
+    // 应用 ID
+    appId: deployId
   };
   fs.writeFileSync(path.join(__dirname, '../dist/unio.config.json'), JSON.stringify(unioConfig, null, 2));
 
