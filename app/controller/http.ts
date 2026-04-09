@@ -1,11 +1,29 @@
-import { HTTPController, HTTPMethod, HTTPMethodEnum, HTTPQuery } from "@alipay/tegg";
+import {
+  MCPController,
+  ToolArgs,
+  MCPToolResponse,
+  MCPTool,
+  ToolArgsSchema,
+} from '@alipay/tegg';
+import * as z from 'zod/v4';
 
-@HTTPController({ path: "/hello" })
-class HttpHelloController {
-  @HTTPMethod({ method: HTTPMethodEnum.GET, path: "/" })
-  async sayHello(@HTTPQuery() name: string): Promise<string> {
-    return `Hello ${name}`;
-  }
+export const ToolType = {
+  name: z.string().describe('npm package name'),
 }
 
-export default HttpHelloController;
+@MCPController()
+export class MCPFooController {
+
+  @MCPTool()
+  // 请在这里用 typeof
+  async bar(@ToolArgsSchema(ToolType) args: ToolArgs<typeof ToolType>): Promise<MCPToolResponse> {
+    return {
+      content: [
+        {
+          type: 'text',
+          text: `海兔 npm 包: ${args.name} 不存在`,
+        },
+      ],
+    };
+  }
+}

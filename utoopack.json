@@ -16,7 +16,9 @@
     "moduleIds": "named"
   },
   "externals": {
-    "@alipay/tegg": "commonjs @alipay/tegg"
+    "@alipay/tegg": "commonjs @alipay/tegg",
+    "zod": "commonjs zod",
+    "zod/v4": "commonjs zod/v4"
   },
   "stats": true
 }

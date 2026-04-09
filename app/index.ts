@@ -1,1 +1,1 @@
-export { default as HttpHelloController } from "./controller/http";
+export { MCPFooController } from "./controller/http";

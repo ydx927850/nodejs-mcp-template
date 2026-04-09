@@ -12,5 +12,11 @@
     "build": "NODE_ENV=production tnpx up build",
     "dev": "NODE_ENV=development tnpx up dev",
     "deploy": "node scripts/pre-deploy.js && apc publish --endpoint https://webgw.antgroup-inc.cn/yuyanaiopen/app/publish"
+  },
+  "tnpm": {
+    "mode": "npm"
+  },
+  "engines": {
+    "node": "20"
   }
 }
