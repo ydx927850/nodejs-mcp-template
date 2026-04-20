@@ -3,6 +3,7 @@
   "eggModule": {
     "name": "eggHelloModule"
   },
+  "type": "commonjs",
   "description": "",
   "repository": "git@code.alipay.com:eggjs/examples.git",
   "devDependencies": {
