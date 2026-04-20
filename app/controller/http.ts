@@ -4,7 +4,7 @@ import {
   MCPToolResponse,
   MCPTool,
   ToolArgsSchema,
-} from '@alipay/tegg';
+} from '@eggjs/tegg';
 import * as z from 'zod/v4';
 
 export const ToolType = {
