@@ -1,6 +1,6 @@
-# Chair-Fass
+# Egg-Fass
 
-Chair Fass HTTP 服务调用举例
+Eggjs MCP 实例
 
 
 ## 初始化

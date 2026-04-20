@@ -1,5 +1,8 @@
 {
-  "name": "chairmosn",
+  "name": "egg-hello-module",
+  "eggModule": {
+    "name": "eggHelloModule"
+  },
   "description": "",
   "repository": "git@code.alipay.com:eggjs/examples.git",
   "devDependencies": {
