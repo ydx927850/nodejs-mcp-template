@@ -5,14 +5,16 @@
   },
   "type": "commonjs",
   "description": "",
-  "repository": "git@code.alipay.com:eggjs/examples.git",
+  "repository": "git@github.com:eggjs/examples.git",
+  "dependencies": {
+    "zod": "^3.21.4"
+  },
   "devDependencies": {
     "@eggjs/tegg": "^3.78.3",
     "@eggjs/tegg-service-worker": "^3.78.3",
     "@eggjs/tsconfig": "^1.3.3",
     "@eggjs/tegg-types": "^3.78.3",
-    "typescript": "^5",
-    "zod": "^3.21.4"
+    "typescript": "^5"
   },
   "scripts": {
     "tsc": "tsc",
