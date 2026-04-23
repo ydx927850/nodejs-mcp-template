@@ -17,6 +17,8 @@ export class MCPFooController {
   @MCPTool()
   // 请在这里用 typeof
   async bar(@ToolArgsSchema(ToolType) args: ToolArgs<typeof ToolType>): Promise<MCPToolResponse> {
+    console.log('BASE_ENV:', process.env.BASE_ENV);
+    console.log('SENSITIVE_ENV:', process.env.SENSITIVE_ENV);
     return {
       content: [
         {
