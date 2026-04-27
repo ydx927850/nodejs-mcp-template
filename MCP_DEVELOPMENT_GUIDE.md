@@ -210,6 +210,20 @@ app/controller/
 
 当前模板所有工具定义在同一个 Controller 文件中。如果工具数量增多，可按业务领域拆分为多个文件，每个文件一个 `@MCPController()` 类。
 
+## 已知限制
+
+### 参数描述在 listTools 中丢失
+
+**现象**：调用 MCP listTools 时，返回的 `inputSchema` 中参数的 `description` 字段缺失，`enum`/`items`/`min` 等约束也会丢失。
+
+例如定义了 `z.enum(['add', 'subtract']).describe('运算类型')`，但 listTools 返回的 JSON Schema 只有 `{"type":"string"}`，丢失了 `enum` 和 `description`。
+
+**原因**：`@ToolArgsSchema` 装饰器要求传入 raw shape 对象（`{ key: z.xxx() }`），而非 `z.object()` 的返回值。MCP SDK 通过 Standard Schema 协议（`~standard.jsonSchema`）将 zod schema 转为 JSON Schema，但 raw shape 是普通 JS 对象，没有 `~standard` 属性，导致转换时约束信息丢失。
+
+**注意**：不能将 Schema 改为 `z.object({...})` 的写法，因为 `@ToolArgsSchema` 的类型约束是 `ZodRawShapeCompat`，传入 `z.object()` 会导致 TypeScript 编译报错。
+
+**修复方向**：需要在 `@eggjs/tegg` 框架的 `MCPServerHelper.mcpToolRegister` 中，将 raw shape 自动包装为 `z.object(schema)` 后再传给 `registerTool`，使 MCP SDK 能正确走 Standard Schema 协议转换。
+
 ## 命名约定
 
 | 元素 | 约定 | 示例 |
