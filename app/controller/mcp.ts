@@ -23,11 +23,16 @@ import * as z from 'zod/v4';
  *
  * 最简单的参数定义：两个 number 类型的操作数。
  * 这是最常用的参数定义模式，大多数工具只需要几个简单字段。
+ *
+ * 重要：必须使用 z.object() 包裹，不能用普通 JS 对象 {}。
+ * 原因：MCP SDK 通过 Standard Schema 协议（~standard.jsonSchema）将 zod schema
+ * 转为 JSON Schema，只有 z.object() 返回的 zod schema 对象才实现了该协议，
+ * 普通 JS 对象缺少 ~standard 属性，会导致 .describe() 描述和 enum/items 等约束丢失。
  */
-export const BinaryOpArgsSchema = {
+export const BinaryOpArgsSchema = z.object({
   a: z.number().describe('第一个操作数'),
   b: z.number().describe('第二个操作数'),
-};
+});
 
 /**
  * 批量运算参数 Schema
@@ -38,7 +43,7 @@ export const BinaryOpArgsSchema = {
  * - z.number().int().min(0): 链式约束，整数且 >= 0
  * - z.xxx.optional(): 可选参数，调用时可以不传
  */
-export const BatchCalcArgsSchema = {
+export const BatchCalcArgsSchema = z.object({
   operation: z
     .enum(['add', 'subtract', 'multiply', 'divide'])
     .describe('运算类型'),
@@ -56,7 +61,7 @@ export const BatchCalcArgsSchema = {
     .enum(['round', 'floor', 'ceil'])
     .optional()
     .describe('舍入模式，默认 round'),
-};
+});
 
 // ============================================================================
 // Controller 定义区域
