@@ -4,6 +4,8 @@ import {
   MCPToolResponse,
   MCPTool,
   ToolArgsSchema,
+  Extra,
+  ToolExtra,
 } from '@eggjs/tegg';
 import * as z from 'zod/v4';
 
@@ -62,6 +64,18 @@ export const BatchCalcArgsSchema = {
     .describe('舍入模式，默认 round'),
 };
 
+export const FetchJsonplaceholderArgsSchema = {
+  resource: z
+    .enum(['posts', 'comments', 'albums', 'photos', 'todos', 'users'])
+    .describe('资源类型'),
+  resource_id: z
+    .number()
+    .int()
+    .positive()
+    .optional()
+    .describe('资源ID，不传则获取列表'),
+};
+
 // ============================================================================
 // Controller 定义区域
 // ============================================================================
@@ -90,7 +104,7 @@ export class MCPCalculatorController {
   //
   // 3. args: ToolArgs<typeof Schema>
   //    - 使用 typeof 自动推断参数类型，获得完整的 TypeScript 类型提示
-  //    - 不要手动定义 args 的类型，始终保持与 Schema 同步
+  //    - 不要手动定义 args 类型，始终保持与 Schema 同步
   //
   // 4. 返回值: MCPToolResponse
   //    - content 是数组，可包含多条内容
@@ -290,6 +304,113 @@ export class MCPCalculatorController {
         },
       ],
     };
+  }
+
+  // --------------------------------------------------------------------------
+  // 请求Header读取：获取当前MCP请求的HTTP Header信息
+  // --------------------------------------------------------------------------
+  //
+  // 演示以下用法：
+  //
+  // 1. @Extra() — 注入 ToolExtra 对象，包含请求的元信息
+  //    - extra.requestInfo?.headers: 原始 HTTP 请求头（仅 HTTP 传输模式下可用）
+  //    - extra.sessionId: MCP 会话 ID
+  //    - extra.requestId: 请求 ID
+  //    - extra.authInfo: 认证信息（如果启用了 OAuth）
+  // 2. HTTP 传输（SSE/StreamableHTTP）下 requestInfo 有值
+  //    stdio 传输下 requestInfo 为 undefined，需要做防御性判断
+  // --------------------------------------------------------------------------
+  @MCPTool({ description: '获取当前MCP请求的HTTP Header信息' })
+  async getRequestHeaders(
+    @Extra() extra: ToolExtra,
+  ): Promise<MCPToolResponse> {
+    const headers = extra.requestInfo?.headers;
+    if (!headers) {
+      return {
+        content: [
+          {
+            type: 'text',
+            text: JSON.stringify({
+              transport: 'stdio',
+              headers: {},
+              note: '当前为stdio传输模式，无HTTP请求对象',
+            }),
+          },
+        ],
+      };
+    }
+
+    return {
+      content: [
+        {
+          type: 'text',
+          text: JSON.stringify({
+            transport: 'http',
+            headers,
+            header_keys: Object.keys(headers),
+            session_id: extra.sessionId ?? null,
+            request_id: extra.requestId ?? null,
+          }),
+        },
+      ],
+    };
+  }
+
+  // --------------------------------------------------------------------------
+  // 外部API调用：调用JSONPlaceholder公共API获取模拟数据
+  // --------------------------------------------------------------------------
+  //
+  // 演示以下用法：
+  //
+  // 1. 使用 Node.js 内置 fetch 调用外部 HTTP API
+  //    - Node 18+ 原生支持 fetch，无需额外依赖
+  //    - 使用 AbortSignal.timeout() 设置请求超时
+  //    - 组合 extra.signal：当 MCP 客户端取消请求时，fetch 也会被中止
+  // 2. z.enum() 限制参数为预定义值
+  // 3. z.number().int().positive().optional() 可选正整数参数
+  //
+  // 如需认证，从环境变量读取 API Key 并设置请求头：
+  //   const apiKey = process.env.API_KEY ?? '';
+  //   headers: { 'Authorization': `Bearer ${apiKey}` }
+  // --------------------------------------------------------------------------
+  @MCPTool({ description: '调用JSONPlaceholder公共API获取模拟数据' })
+  async fetchJsonplaceholder(
+    @ToolArgsSchema(FetchJsonplaceholderArgsSchema) args: ToolArgs<typeof FetchJsonplaceholderArgsSchema>,
+    @Extra() extra: ToolExtra,
+  ): Promise<MCPToolResponse> {
+    const url = args.resource_id
+      ? `https://jsonplaceholder.typicode.com/${args.resource}/${args.resource_id}`
+      : `https://jsonplaceholder.typicode.com/${args.resource}`;
+
+    try {
+      // 组合超时信号和客户端取消信号：任一触发都会中止请求
+      const signals: AbortSignal[] = [AbortSignal.timeout(10_000)];
+      if (extra.signal) signals.push(extra.signal);
+      const signal = AbortSignal.any(signals);
+
+      const resp = await fetch(url, { signal });
+      if (!resp.ok) {
+        return {
+          content: [{ type: 'text', text: `HTTP错误: ${resp.status} ${resp.statusText}` }],
+          isError: true,
+        };
+      }
+      const data = await resp.json();
+      return {
+        content: [
+          {
+            type: 'text',
+            text: JSON.stringify({ url, status_code: resp.status, data }),
+          },
+        ],
+      };
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : String(e);
+      return {
+        content: [{ type: 'text', text: `请求失败: ${msg}` }],
+        isError: true,
+      };
+    }
   }
 }
 

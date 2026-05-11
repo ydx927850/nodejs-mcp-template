@@ -29,3 +29,6 @@ typings/chair.d.ts
 .eslintcache
 .node
 .egg
+.run/
+*.js.map
+.DS_Store
