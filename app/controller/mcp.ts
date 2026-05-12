@@ -396,21 +396,11 @@ export class MCPCalculatorController {
         };
       }
       const data = await resp.json();
-      // 读取响应头，用于确认是否开启 gzip 压缩
-      const headers: Record<string, string> = {};
-      resp.headers.forEach((value, key) => {
-        headers[key] = value;
-      });
       return {
         content: [
           {
             type: 'text',
-            text: JSON.stringify({
-              url,
-              status_code: resp.status,
-              headers,  // 包含 content-encoding 和 content-length
-              data,
-            }),
+            text: JSON.stringify({ url, status_code: resp.status, data }),
           },
         ],
       };
